@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+ <html>
+ <head>
+  <title>Fullscreen GIF with Date and Time</title>
+  <style>
+  body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0); /* Background color if GIF doesn't fill perfectly */
+  font-family: sans-serif; /* Default font */
+  color: white; /* Default text color */
+  }
+
+  .fullscreen-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  position: relative; /* For absolute positioning of text */
+  }
+
+  .fullscreen-gif {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  z-index: 1; /* Ensure GIF is behind the text if needed */
+  }
+
+  #datetime-overlay {
+  position: absolute;
+  top: 45%;
+  left: 42%;
+  transform: translate(-35%, -35%);
+  font-size: 1.5em; /* Adjust size as needed */
+  text-align: left;
+  z-index: 2; /* Ensure text is on top of the GIF */
+  background-color: rgba(0, 0, 0, 0); /* Optional: Background for readability */
+  padding: 10px;
+  border-radius: 5px; /* Optional: Rounded corners */
+  animation: slideHorizontal 3s infinite ease-in-out;
+  text-shadow: 2px 2px 3px rgba(0, 0, 0, 1);
+  }
+  @keyframes slideHorizontal {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(30px); }
+  100% { transform: translateX(0); }
+}
+
+  #date
+  {
+    position: absolute;
+   top: 45%;
+    left: 49%;
+    transform: translate(-35%, -35%);
+    font-size: 1.5em; /* Adjust size as needed */
+   text-align: center;
+  z-index: 2; /* Ensure text is on top of the GIF */
+  background-color: rgba(0, 0, 0, 0); /* Optional: Background for readability */
+  padding: 10px;
+  border-radius: 5px; /* Optional: Rounded corners */
+  animation: slideHorizontal 3s infinite ease-in-out;
+  text-shadow: 2px 2px 3px rgba(0, 0, 0, 1);
+
+  }
+  </style>
+ </head>
+ <body>
+  <div class="fullscreen-container">
+  <img class="fullscreen-gif" src="ezgif.com-animated-gif-maker (7).gif" alt="Fullscreen Animated GIF">
+  <div id = "date"> </div>
+  
+  <div id="datetime-overlay"></div>
+  </div>
+ 
+  
+
+  <script>
+     const now = new Date(); // Get current date
+
+let month = now.getMonth() + 1; // Months are 0-indexed (0=January)
+let day = now.getDate();
+let year = now.getFullYear();
+
+// Pad month and day with 0 if needed
+if (month < 10) month = '0' + month;
+if (day < 10) day = '0' + day;
+
+const formattedDate = `${month}/${ day}/${ year}`;
+
+document.getElementById('date').textContent = formattedDate;
+  const datetimeOverlay = document.getElementById('datetime-overlay');
+  const dates = document.getElementById("date");
+  function updateDateTime() {
+  const now = new Date();
+  const options = {
+    
+    hour: 'numeric',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: true, // Include AM/PM
+         // Year (e.g., 2024)
+      // Include the day of the week
+};
+  const formattedDateTime = now.toLocaleString(undefined, options);
+  datetimeOverlay.textContent = formattedDateTime;
+  }
+
+  updateDateTime(); // Initial display
+  setInterval(updateDateTime, 1000); // Update every second
+  </script>
+ </body>
+ </html>
